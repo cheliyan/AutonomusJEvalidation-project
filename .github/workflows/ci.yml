@@ -1,0 +1,74 @@
+name: CI Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.11', '3.12', '3.13']
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        python -m pytest -q
+    
+    - name: Check Python syntax
+      run: |
+        python -m compileall agents database knowledge_base workflow tests app.py config.py
+    
+    - name: Validate JSON files
+      run: |
+        python -m json.tool data/finance_knowledge_base.json > /dev/null
+
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install flake8 black isort
+    
+    - name: Lint with flake8
+      run: |
+        flake8 agents database knowledge_base workflow tests app.py config.py --count --select=E9,F63,F7,F82 --show-source --statistics
+      continue-on-error: true
+    
+    - name: Check formatting with black
+      run: |
+        black --check agents database knowledge_base workflow tests app.py config.py
+      continue-on-error: true
+    
+    - name: Check import sorting
+      run: |
+        isort --check-only agents database knowledge_base workflow tests app.py config.py
+      continue-on-error: true

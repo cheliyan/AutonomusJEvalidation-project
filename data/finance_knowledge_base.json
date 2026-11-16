@@ -1,0 +1,22 @@
+{
+  "validation": {"required_fields": ["document_id", "company_code", "gl_account", "cost_center", "debit", "credit"], "balance_tolerance": 0.01},
+  "masters": {
+    "gl_accounts": {"100100": "Cash and bank", "200100": "Accounts payable", "400100": "Revenue", "500100": "Operating expense", "600100": "Travel expense", "210010": "Intercompany receivable", "210020": "Intercompany payable"},
+    "cost_centres": {"CC100": "Corporate finance", "CC200": "Operations", "CC300": "Sales"},
+    "company_codes": {"IN01": "India Operations", "IN02": "India Services"}
+  },
+  "intercompany": {"gl_accounts": ["210010", "210020"], "description": "Cross-company documents must use approved intercompany GL accounts."},
+  "approval_thresholds": {"additional_approval_inr": 1000000},
+  "risk_classification": {"medium_min_inr": 100000, "high_value_min_inr": 1000000},
+  "rules": [
+    {"id": "JOURNAL_BALANCE", "name": "Balanced journal entries", "error_codes": ["UNBALANCED"], "explanation": "Policy: every journal document must have equal debit and credit totals.", "action": "Correct the journal totals before resubmission."},
+    {"id": "GL_MASTER", "name": "Valid general ledger account", "error_codes": ["INVALID_GL"], "explanation": "Policy: every GL account must exist in the approved GL master.", "action": "Select an approved GL account."},
+    {"id": "COST_CENTRE_MASTER", "name": "Valid cost centre", "error_codes": ["INVALID_COST_CENTER"], "explanation": "Policy: every cost centre must exist in the approved cost centre master.", "action": "Select an approved cost centre."},
+    {"id": "COMPANY_CODE_MASTER", "name": "Valid company code", "error_codes": ["MISSING_FIELD", "INVALID_COMPANY_CODE"], "explanation": "Policy: company code and required journal fields must be present and valid.", "action": "Complete the required fields using approved master data."},
+    {"id": "CROSS_COMPANY_INTERCOMPANY", "name": "Intercompany accounting", "error_codes": ["MISSING_INTERCOMPANY_ACCOUNT"], "explanation": "Policy: cross-company transactions require an approved intercompany GL account.", "action": "Use an approved intercompany GL account."},
+    {"id": "HIGH_VALUE_APPROVAL", "name": "High-value approval", "error_codes": [], "explanation": "Policy: transactions above INR 1,000,000 require additional finance approval.", "action": "Obtain additional finance approval before simulated posting."},
+    {"id": "MASTER_DATA_POSTING_BLOCK", "name": "No posting with missing master data", "error_codes": ["INVALID_GL", "INVALID_COST_CENTER", "INVALID_COMPANY_CODE", "MISSING_FIELD"], "explanation": "Policy: journals with missing or invalid master data must not be posted.", "action": "Correct master data and resubmit; posting is blocked."},
+    {"id": "DUPLICATE_PREVENTION", "name": "Duplicate journal prevention", "error_codes": ["DUPLICATE"], "explanation": "Control: duplicate journal content must be investigated before processing.", "action": "Verify the source document and avoid duplicate posting."},
+    {"id": "AMOUNT_INTEGRITY", "name": "Amount integrity", "error_codes": ["NEGATIVE_AMOUNT", "INVALID_AMOUNT", "BOTH_SIDES_POPULATED", "ZERO_AMOUNT"], "explanation": "Control: journal lines must contain numeric, non-negative amounts on one side only.", "action": "Correct debit and credit values."}
+  ]
+}

@@ -1,0 +1,21 @@
+document_id,line_number,company_code,gl_account,cost_center,debit,credit,currency,description
+JE-001,1,IN01,500100,CC200,12500,0,INR,Office supplies expense
+JE-001,2,IN01,100100,CC200,0,12500,INR,Office supplies payment
+JE-002,1,IN01,600100,CC100,7500,0,INR,Travel expense
+JE-002,2,IN01,100100,CC100,0,7000,INR,Travel payment
+JE-003,1,IN01,999999,CC200,4500,0,INR,Invalid GL test
+JE-003,2,IN01,100100,CC200,0,4500,INR,Invalid GL offset
+JE-004,1,IN01,500100,CC999,8000,0,INR,Invalid cost centre test
+JE-004,2,IN01,100100,CC200,0,8000,INR,Invalid cost centre offset
+JE-005,1,,500100,CC200,3000,0,INR,Missing company code test
+JE-005,2,IN01,100100,CC200,0,3000,INR,Missing company code offset
+JE-006,1,IN01,500100,CC200,1250000,0,INR,High value project expense
+JE-006,2,IN01,100100,CC200,0,1250000,INR,High value project settlement
+JE-007,1,IN01,210010,CC100,25000,0,INR,Intercompany receivable
+JE-007,2,IN02,210020,CC100,0,25000,INR,Intercompany payable
+JE-008,1,IN01,500100,CC200,12500,0,INR,Office supplies expense
+JE-008,2,IN01,100100,CC200,0,12500,INR,Office supplies payment
+JE-009,1,IN01,500100,CC200,-500,0,INR,Negative amount test
+JE-009,2,IN01,100100,CC200,0,-500,INR,Negative amount offset
+JE-010,1,IN01,600100,CC100,18000,0,INR,Valid travel expense
+JE-010,2,IN01,100100,CC100,0,18000,INR,Valid travel payment
