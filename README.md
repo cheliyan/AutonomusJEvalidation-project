@@ -98,10 +98,6 @@ Tests cover validation, policy mapping, approval/rejection, posting guards, and 
 
 Upload `data/sample_journal_entries.csv` on Journal Upload. It contains balanced and unbalanced entries, invalid GL and cost-centre values, missing company data, a high-value journal, cross-company entries, duplicate content, negative amounts, and valid journals. Approve one valid item in the Approval Workbench, reject another, then view the simulated reference and audit events on Posting and Audit.
 
-## Sample Screenshots
-
-No screenshots are committed. Capture the dashboard, agent analysis, approval workbench, and posting/audit views from the running application for assignment submission.
-
 ## Limitations and Future Enhancements
 
 This is not an accounting system of record. Master data is illustrative; authentication, role-based approval limits, multi-user concurrency, currency conversion, and real SAP integration are out of scope. Risk is deterministic and rule-based, not a trained machine-learning model. Future work could add richer approval roles, policy administration, and audit exports.
@@ -281,22 +277,7 @@ If you find a bug or have a suggestion:
 - Check the [sample demonstration](#sample-demonstration) section
 - Examine test cases in `tests/` for usage examples
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Citation
-
-If you use this project in academic work, please cite it as:
-
-```bibtex
-@software{autonomous_je_validation,
-  title={Autonomous AI Agents for Enterprise Finance Workflow Automation Using Knowledge-Based Reasoning},
-  author={Your Name},
-  year={2026},
-  url={https://github.com/yourusername/AutonomusJEvalidation-project}
-}
-```
 
 ## Acknowledgments
 
